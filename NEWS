@@ -3,6 +3,8 @@ PHP                                                                        NEWS
 ?? ??? ????, PHP 8.4.28
 
 - Core:
+  . Fixed bug GHSA-h6v5-x8v9-5546 (Integer overflow in ZEND_ROPE_END causing
+    heap buffer overflow on 32-bit). (Mistral Vibe Code)
   . Fixed bug GH-24184 (System ID not being reinitialized after an Apache
     graceful restart, potentially causing incompatible OPcache file cache
     entries to be reused). (Levi Morrison)

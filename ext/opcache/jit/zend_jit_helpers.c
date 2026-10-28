@@ -3268,6 +3268,12 @@ static zend_string* ZEND_FASTCALL zend_jit_rope_end(zend_string **rope, uint32_t
 	uint32_t flags = ZSTR_COPYABLE_CONCAT_PROPERTIES;
 	for (i = 0; i <= count; i++) {
 		flags &= ZSTR_GET_COPYABLE_CONCAT_PROPERTIES(rope[i]);
+		if (UNEXPECTED(len > ZSTR_MAX_LEN - ZSTR_LEN(rope[i]))) {
+			for (i = 0; i <= count; i++) {
+				zend_string_release_ex(rope[i], 0);
+			}
+			zend_error_noreturn(E_ERROR, "String size overflow");
+		}
 		len += ZSTR_LEN(rope[i]);
 	}
 	ret = zend_string_alloc(len, 0);
